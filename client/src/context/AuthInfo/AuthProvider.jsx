@@ -23,8 +23,8 @@ const AuthProvider = ({ children }) => {
   };
 
   const signOutUser = () => {
-    loading(true);
-    signOut(auth);
+    setLoading(true);
+    return signOut(auth);
   };
 
   useEffect(() => {
@@ -42,6 +42,7 @@ const AuthProvider = ({ children }) => {
     loading,
     createUser,
     signInUser,
+    signOutUser,
   };
 
   return (

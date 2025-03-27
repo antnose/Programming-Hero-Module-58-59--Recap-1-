@@ -27,7 +27,7 @@ const SignIn = () => {
       <div className="w-full max-w-md">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8">
           <h1 className="text-2xl font-bold text-purple-400 mb-6 text-center">
-            Create Account
+            Sign In Now
           </h1>
 
           <form onSubmit={handleSignIn} className="space-y-6">
