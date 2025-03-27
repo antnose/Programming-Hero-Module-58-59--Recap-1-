@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../../context/AuthInfo/AuthContext";
 
 const Navbar = () => {
+  const { user } = useContext(AuthContext);
   const li = (
     <>
       <li>
-        <a>Item 1</a>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <a>Item 2</a>
+        <Link to="/register">Register</Link>
       </li>
       <li>
-        <a>Item 3</a>
+        <Link to="/signIn">Login</Link>
       </li>
     </>
   );
@@ -48,8 +50,20 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{li}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/register">Register</Link>
-        <a className="btn">Sign In</a>
+        {user ? (
+          <>
+            <button className="btn">Log Out</button>
+          </>
+        ) : (
+          <>
+            <Link to="/register" className="btn">
+              Register
+            </Link>
+            <Link to="/signIn" className="btn">
+              Sign In
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

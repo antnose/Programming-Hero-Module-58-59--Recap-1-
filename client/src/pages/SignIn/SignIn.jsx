@@ -1,61 +1,36 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
+// import loginAnimation from "../../assets/lottie/Login.json";
+import loginAnimation from "../../assets/lottie/Login.json";
 import Lottie from "lottie-react";
-import registerAnimation from "../../assets/lottie/Register.json";
 import AuthContext from "../../context/AuthInfo/AuthContext";
 import { Link } from "react-router-dom";
 
-const Register = () => {
-  const { createUser } = useContext(AuthContext);
-  const { error, setError } = useState("");
-  const handleSubmit = (e) => {
+const SignIn = () => {
+  const { signInUser } = useContext(AuthContext);
+  const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const rePassword = form.rePassword.value;
-    console.log(name, email, password, rePassword);
-    if (password === rePassword) {
-      createUser(email, password)
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    } else if (password.length != 8) {
-      setError("Password should be 8 character ");
-    }
+    console.log(email, password);
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-      <Lottie
-        animationData={registerAnimation}
-        className="lg:w-full lg:max-w-md"
-      />
+      <Lottie animationData={loginAnimation} />
       <div className="w-full max-w-md">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8">
           <h1 className="text-2xl font-bold text-purple-400 mb-6 text-center">
             Create Account
           </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-300 mb-1"
-              >
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className={`w-full px-4 py-2 rounded-lg bg-gray-700 text-gray-200 border focus:outline-none focus:ring-1 focus:ring-purple-400`}
-                placeholder="John Doe"
-              />
-            </div>
-
+          <form onSubmit={handleSignIn} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -88,37 +63,21 @@ const Register = () => {
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="rePassword"
-                className="block text-sm font-medium text-gray-300 mb-1"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="rePassword"
-                name="rePassword"
-                className={`w-full px-4 py-2 rounded-lg bg-gray-700 text-gray-200 border focus:outline-none focus:ring-1 focus:ring-purple-400`}
-                placeholder="••••••••"
-              />
-            </div>
-
             <button
               type="submit"
               className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Register
+              Sign In
             </button>
           </form>
 
           <p className="mt-6 text-center text-sm text-gray-400">
-            Already have an account?{" "}
+            Create an account?{" "}
             <Link
-              to="/signIn"
+              to="/register"
               className="text-purple-400 hover:text-purple-300 font-medium"
             >
-              Sign in
+              Sign Up
             </Link>
           </p>
         </div>
@@ -127,6 +86,4 @@ const Register = () => {
   );
 };
 
-export default Register;
-
-// 8.06
+export default SignIn;
