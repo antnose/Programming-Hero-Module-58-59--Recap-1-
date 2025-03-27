@@ -1,4 +1,6 @@
 import React from "react";
+import Lottie from "lottie-react";
+import registerAnimation from "../../assets/lottie/Register.json";
 
 const Register = () => {
   const handleSubmit = (e) => {
@@ -12,6 +14,10 @@ const Register = () => {
   };
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+      <Lottie
+        animationData={registerAnimation}
+        className="lg:w-full lg:max-w-md"
+      />
       <div className="w-full max-w-md">
         <div className="bg-gray-800 rounded-lg shadow-xl p-8">
           <h1 className="text-2xl font-bold text-purple-400 mb-6 text-center">
