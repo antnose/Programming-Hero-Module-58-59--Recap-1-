@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import registerAnimation from "../../assets/lottie/Register.json";
+import AuthContext from "../../context/AuthInfo/AuthContext";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
+  const { error, setError } = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -11,6 +14,17 @@ const Register = () => {
     const password = form.password.value;
     const rePassword = form.rePassword.value;
     console.log(name, email, password, rePassword);
+    if (password === rePassword) {
+      createUser(email, password)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } else if (password.length != 8) {
+      setError("Password should be 8 character ");
+    }
   };
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
