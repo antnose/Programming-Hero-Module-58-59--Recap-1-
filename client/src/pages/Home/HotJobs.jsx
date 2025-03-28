@@ -11,10 +11,11 @@ const HotJobs = () => {
         setJobs(data);
       });
   }, []);
+
   return (
-    <div>
-      <h1>Hot Jobs</h1>
-      <div>
+    <div className="mb-6">
+      <h1 className="text-center text-3xl font-semibold my-8">Hot Jobs</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 items-center justify-center ">
         {jobs.map((job) => (
           <HotJobCard key={job._id} job={job} />
         ))}
