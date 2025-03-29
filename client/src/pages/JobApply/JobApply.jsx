@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const JobApply = () => {
   const { id } = useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -23,7 +24,7 @@ const JobApply = () => {
       github,
       resume,
     };
-    fetch(`http://localhost:3001/job_application`, {
+    fetch(`http://localhost:3001/jobApplication`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -37,6 +38,8 @@ const JobApply = () => {
             title: "Apply Successfully",
             icon: "success",
           });
+
+          navigate("/jobApplication");
         }
       });
   };

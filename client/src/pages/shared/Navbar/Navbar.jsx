@@ -2,7 +2,14 @@ import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../../context/AuthInfo/AuthContext";
 import { motion } from "framer-motion";
-import { FiHome, FiUserPlus, FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
+import {
+  FiBriefcase,
+  FiHome,
+  FiUserPlus,
+  FiLogIn,
+  FiLogOut,
+  FiUser,
+} from "react-icons/fi";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
@@ -87,6 +94,19 @@ const Navbar = () => {
                     <FiUser className="inline mr-1" />
                     {user.email}
                   </span>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="ml-2"
+                >
+                  <Link
+                    to="/jobApplication"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-200 text-sm font-medium border border-indigo-200 dark:border-indigo-700"
+                  >
+                    <FiBriefcase />
+                    My Applications
+                  </Link>
                 </motion.div>
 
                 <motion.button
