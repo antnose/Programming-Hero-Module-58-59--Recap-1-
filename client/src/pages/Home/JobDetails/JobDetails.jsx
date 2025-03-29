@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { CiLocationOn, CiCalendar, CiMoneyBill } from "react-icons/ci";
 import { FiArrowLeft, FiSend } from "react-icons/fi";
 import { motion } from "framer-motion";
@@ -30,6 +30,7 @@ const JobDetails = () => {
   const navigate = useNavigate();
   const job = useLoaderData();
   const {
+    _id,
     title,
     jobType,
     category,
@@ -292,23 +293,25 @@ const JobDetails = () => {
           Go Back
         </motion.button>
 
-        <motion.button
-          whileHover={{
-            y: -2,
-            scale: 1.02,
-            boxShadow: "0 5px 15px rgba(79, 70, 229, 0.4)",
-          }}
-          whileTap={{ scale: 0.98 }}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all"
-        >
-          <motion.span
-            animate={{ rotate: [0, 20, -20, 0] }}
-            transition={{ repeat: Infinity, duration: 2, repeatDelay: 5 }}
+        <Link to={`/jobApply/${_id}`} className=" flex flex-1">
+          <motion.button
+            whileHover={{
+              y: -2,
+              scale: 1.02,
+              boxShadow: "0 5px 15px rgba(79, 70, 229, 0.4)",
+            }}
+            whileTap={{ scale: 0.98 }}
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all"
           >
-            <FiSend />
-          </motion.span>
-          Apply Now
-        </motion.button>
+            <motion.span
+              animate={{ rotate: [0, 20, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 2, repeatDelay: 5 }}
+            >
+              <FiSend />
+            </motion.span>
+            Apply Now
+          </motion.button>
+        </Link>
       </motion.div>
     </motion.div>
   );
