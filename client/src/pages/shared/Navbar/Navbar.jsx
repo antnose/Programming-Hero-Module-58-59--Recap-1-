@@ -76,20 +76,8 @@ const Navbar = () => {
 
           {/* Navigation links on the right */}
           <div className="flex items-center space-x-1">
-            <ul className="flex space-x-1">
-              <NavLink to="/" icon={<FiHome />}>
-                Home
-              </NavLink>
-              <NavLink to="/register" icon={<FiUserPlus />}>
-                Register
-              </NavLink>
-              <NavLink to="/signIn" icon={<FiLogIn />}>
-                Login
-              </NavLink>
-            </ul>
-
             {/* User info and logout if logged in */}
-            {user && (
+            {user ? (
               <div className="flex items-center space-x-2 ml-2">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -117,6 +105,18 @@ const Navbar = () => {
                   Sign Out
                 </motion.button>
               </div>
+            ) : (
+              <ul className="flex space-x-1">
+                <NavLink to="/" icon={<FiHome />}>
+                  Home
+                </NavLink>
+                <NavLink to="/register" icon={<FiUserPlus />}>
+                  Register
+                </NavLink>
+                <NavLink to="/signIn" icon={<FiLogIn />}>
+                  Login
+                </NavLink>
+              </ul>
             )}
           </div>
         </div>

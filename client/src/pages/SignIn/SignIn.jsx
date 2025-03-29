@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import loginAnimation from "../../assets/lottie/Login.json";
 import AuthContext from "../../context/AuthInfo/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../shared/SharedAuth/SocialLogin";
 import { motion } from "framer-motion";
 
@@ -10,6 +10,10 @@ const SignIn = () => {
   const { signInUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+  const locateFrom = location.state || "/";
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -20,7 +24,7 @@ const SignIn = () => {
 
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
+        navigate(locateFrom);
       })
       .catch((error) => {
         setError(error.message || "Sign in failed");
