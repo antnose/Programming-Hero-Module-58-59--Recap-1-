@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const JobApply = () => {
   const { id } = useParams();
-  const { user } = useAuth;
+  const { user } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const linkedin = form.linkedinUrl.value;
     const github = form.githubUrl.value;
     const resume = form.resumeUrl.value;
+    console.log(user);
 
     // console.log(linkedin, github, resume);
 
@@ -21,6 +23,22 @@ const JobApply = () => {
       github,
       resume,
     };
+    fetch(`http://localhost:3001/job_application`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(jobApplication),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Apply Successfully",
+            icon: "success",
+          });
+        }
+      });
   };
 
   return (
