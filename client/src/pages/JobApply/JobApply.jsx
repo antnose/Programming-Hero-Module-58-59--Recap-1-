@@ -1,13 +1,26 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const JobApply = () => {
+  const { id } = useParams();
+  const { user } = useAuth;
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const linkedin = form.linkedinUrl.value;
     const github = form.githubUrl.value;
     const resume = form.resumeUrl.value;
-    console.log(linkedin, github, resume);
+
+    // console.log(linkedin, github, resume);
+
+    const jobApplication = {
+      job_id: id,
+      applicant_email: user.email,
+      linkedin,
+      github,
+      resume,
+    };
   };
 
   return (
