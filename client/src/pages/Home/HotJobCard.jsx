@@ -1,8 +1,10 @@
 import React from "react";
 import { CiLocationOn, CiCalendar, CiEdit } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const HotJobCard = ({ job }) => {
   const {
+    _id,
     title,
     company,
     company_logo,
@@ -52,8 +54,11 @@ const HotJobCard = ({ job }) => {
               Requirements:
             </div>
             <ul className="list-disc list-inside text-xs text-gray-600 dark:text-gray-300 space-y-1">
-              {requirements.map((requirement) => (
-                <li className="text-indigo-600 list-none dark:text-indigo-400">
+              {requirements.map((requirement, idx) => (
+                <li
+                  key={idx}
+                  className="text-indigo-600 list-none dark:text-indigo-400"
+                >
                   {requirement}
                 </li>
               ))}
@@ -93,9 +98,11 @@ const HotJobCard = ({ job }) => {
             {location}
           </span>
 
-          <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors duration-200 cursor-pointer ">
-            View Details
-          </button>
+          <Link to={`/jobs/${_id}`}>
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors duration-200 cursor-pointer ">
+              View Details
+            </button>
+          </Link>
         </div>
       </div>
     </div>
