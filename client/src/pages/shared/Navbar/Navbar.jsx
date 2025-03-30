@@ -88,6 +88,38 @@ const Navbar = () => {
               <div className="flex items-center space-x-2 ml-2">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="ml-2"
+                >
+                  <Link
+                    to="/addJob"
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-all ${
+                      location.pathname === "/"
+                        ? "bg-indigo-600 text-white border-indigo-700 shadow-md"
+                        : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    }`}
+                  >
+                    <FiHome
+                      className={`text-lg ${
+                        location.pathname === "/"
+                          ? "text-white"
+                          : "text-indigo-500 dark:text-indigo-400"
+                      }`}
+                    />
+                    <span>Add new job</span>
+                    {location.pathname === "/" && (
+                      <motion.div
+                        layoutId="homeActiveIndicator"
+                        className="absolute inset-0 rounded-lg bg-indigo-700/20"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
                   className="flex items-center text-sm rounded-full"
                 >
                   <span className="mr-2 font-medium text-gray-700 dark:text-gray-200">
@@ -95,6 +127,7 @@ const Navbar = () => {
                     {user.email}
                   </span>
                 </motion.div>
+
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
