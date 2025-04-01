@@ -6,7 +6,7 @@ const MyPostedJobs = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetch(`htp://localhost:3001/jobs?email=${user.email}`)
+    fetch(`http://localhost:3001/jobs?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -15,7 +15,29 @@ const MyPostedJobs = () => {
   }, [user.email]);
   return (
     <div>
-      <h2>My Posted Jobs : {jobs.length} </h2>
+      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th></th>
+              <th>Job Title</th>
+              <th>Deadline</th>
+              <th>Application Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jobs.map((job, idx) => {
+              <tr>
+                <th>{idx + 1}</th>
+                <td>{job.title}</td>
+                <td>{job.applicationDeadline}</td>
+                <td>{job.applicationCount}</td>
+              </tr>;
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

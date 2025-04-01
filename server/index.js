@@ -87,9 +87,30 @@ async function run() {
       res.send(result);
     });
 
-    app.post("/job_application", async (req, res) => {
+    app.post("/jobApplication", async (req, res) => {
       const application = req.body;
       const result = await jobApplication.insertOne(application);
+      // not the best way (use aggregate)
+      // skip --> it
+      const id = application.job_id;
+      const query = { _id: new ObjectId(id) };
+      const job = await jobCollection.findOne(query);
+
+      let newCount = 0;
+      if (job.applicationCount) {
+        count = job.applicationCount + 1;
+      } else {
+        newCount = 1;
+      }
+
+      // new update the job info
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          applicationCount: newCount,
+        },
+      };
+      const updateResult = await jobCollection.updateOne(filter, updatedDoc);
       res.send(result);
     });
   } finally {
