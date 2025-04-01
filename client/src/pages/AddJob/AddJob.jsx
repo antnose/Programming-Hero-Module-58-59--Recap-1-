@@ -15,6 +15,7 @@ import {
   FiCheckCircle,
 } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 const AddJob = () => {
   const { user } = useAuth();
@@ -45,6 +46,7 @@ const AddJob = () => {
             icon: "success",
             draggable: true,
           });
+          Navigate("/myPostedJobs");
         }
       });
   };
@@ -271,6 +273,20 @@ const AddJob = () => {
             name="hrEmail"
             defaultValue={user?.email}
             placeholder="hr@company.com"
+            className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+          />
+        </motion.div>
+
+        {/* Application Deadline */}
+        <motion.div variants={itemVariants} className="mb-4">
+          <label className="block text-gray-300 text-sm font-medium mb-1 flex items-center gap-2">
+            <FiMail className="text-blue-400" />
+            Application Deadline
+          </label>
+          <input
+            type="text"
+            name="applicationDeadline"
+            placeholder="Deadline"
             className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           />
         </motion.div>
