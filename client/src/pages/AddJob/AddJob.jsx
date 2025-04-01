@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import {
   FiBriefcase,
@@ -13,17 +14,39 @@ import {
   FiList,
   FiCheckCircle,
 } from "react-icons/fi";
+import useAuth from "../../hooks/useAuth";
 
 const AddJob = () => {
+  const { user } = useAuth();
   const handleAddJob = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const initialData = Object.fromEntries(formData.entries());
-    console.log(initialData);
+    // console.log(initialData);
     const { min, max, currency, ...newJob } = initialData;
-    console.log(newJob);
+    // console.log(newJob);
     newJob.salaryRange = { min, max, currency };
-    console.log(newJob);
+    newJob.jobRequirements = newJob.jobRequirements.split("\n");
+    newJob.jobResponsibilities = newJob.jobResponsibilities.split("\n");
+    // console.log(newJob);
+
+    fetch("http://localhost:3001/jobs", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newJob),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Job Created Successfully",
+            icon: "success",
+            draggable: true,
+          });
+        }
+      });
   };
 
   // Animation variants
@@ -246,6 +269,7 @@ const AddJob = () => {
           <input
             type="email"
             name="hrEmail"
+            defaultValue={user?.email}
             placeholder="hr@company.com"
             className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           />
