@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 3001;
+const jwt = require("jsonwebtoken");
 
 // all middleware
 app.use(cors());
@@ -37,6 +38,13 @@ async function run() {
     const jobApplication = client
       .db("JobPortalRecap")
       .collection("jobApplication");
+
+    // Auth Related APIS
+    app.post(`/jwt`, async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, "secret", { expiresIn: "1h" });
+      res.send(token);
+    });
 
     // jobs related apis
     app.get("/jobs", async (req, res) => {

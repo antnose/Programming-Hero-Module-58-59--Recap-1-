@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import loginAnimation from "../../assets/lottie/Login.json";
 import AuthContext from "../../context/AuthInfo/AuthContext";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { data, Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../shared/SharedAuth/SocialLogin";
 import { motion } from "framer-motion";
 
@@ -24,7 +25,12 @@ const SignIn = () => {
 
     signInUser(email, password)
       .then((result) => {
-        navigate(locateFrom);
+        console.log("Sign in", result.user.email);
+        const user = { email: email };
+        axios.post("http://localhost:3001/jwt", user).then((data) => {
+          console.log(data);
+        });
+        // navigate(locateFrom);
       })
       .catch((error) => {
         setError(error.message || "Sign in failed");
