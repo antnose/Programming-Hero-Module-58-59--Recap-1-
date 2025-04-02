@@ -27,8 +27,8 @@ const SignIn = () => {
       .then((result) => {
         console.log("Sign in", result.user.email);
         const user = { email: email };
-        axios.post("http://localhost:3001/jwt", user).then((data) => {
-          console.log(data);
+        axios.post("http://localhost:3001/jwt", user).then((res) => {
+          console.log(res.data);
         });
         // navigate(locateFrom);
       })
