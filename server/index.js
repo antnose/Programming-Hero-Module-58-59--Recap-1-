@@ -8,7 +8,12 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 // all middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173/"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
@@ -86,6 +91,9 @@ async function run() {
     app.get("/job-application", async (req, res) => {
       const email = req.query.email;
       const query = { applicant_email: email };
+
+      console.log("Cookies", req.cookies);
+
       const result = await jobApplication.find(query).toArray();
       // bot way to aggregate data
       for (const application of result) {

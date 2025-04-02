@@ -13,6 +13,7 @@ import {
   FaMapMarkerAlt,
   FaMoneyBillWave,
 } from "react-icons/fa";
+import axios from "axios";
 
 const statusColors = {
   pending: "bg-yellow-100 text-yellow-800",
@@ -34,12 +35,18 @@ const MyApplications = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3001/job-application?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
-        setLoading(false);
-      });
+    // fetch(`http://localhost:3001/job-application?email=${user.email}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setJobs(data);
+    //     setLoading(false);
+    //   });
+
+    axios
+      .get(`http://localhost:3001/job-application?email=${user.email}`, {
+        withCredentials: true,
+      })
+      .then((res) => setJobs(res.data));
   }, [user.email]);
 
   const toggleSelect = (id) => {
