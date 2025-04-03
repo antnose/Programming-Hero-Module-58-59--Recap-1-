@@ -17,6 +17,27 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+const logger = (req, res, next) => {
+  console.log("Inside the logger");
+  next();
+};
+
+const verifyToken = (req, res, next) => {
+  // console.log("inside verify token middleware");
+  const token = req?.cookies?.token;
+  if (!token) {
+    return res.status(401).send({ message: "Unauthorized access" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+    if (error) {
+      return res.status(401).send({ message: "Unauthorized access" });
+    }
+    //
+    next();
+  });
+};
+
 // MongoDb Code Start
 
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.to58y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -60,7 +81,7 @@ async function run() {
     });
 
     // jobs related apis
-    app.get("/jobs", async (req, res) => {
+    app.get("/jobs", logger, async (req, res) => {
       const email = req.query.email;
       let query = {};
       if (email) {
@@ -89,10 +110,10 @@ async function run() {
     // job application apis
     // get all data, get one data, get some data[0, 1 , many]
 
-    app.get("/job-application", async (req, res) => {
+    app.get("/job-application", verifyToken, async (req, res) => {
       const email = req.query.email;
       const query = { applicant_email: email };
-      console.log("Cuk cuk", req.cookies);
+
       const result = await jobApplication.find(query).toArray();
       // bot way to aggregate data
       for (const application of result) {
