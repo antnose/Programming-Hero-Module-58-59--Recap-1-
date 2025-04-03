@@ -23,17 +23,16 @@ const logger = (req, res, next) => {
 };
 
 const verifyToken = (req, res, next) => {
-  // console.log("inside verify token middleware");
   const token = req?.cookies?.token;
   if (!token) {
     return res.status(401).send({ message: "Unauthorized access" });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
-    if (error) {
-      return res.status(401).send({ message: "Unauthorized access" });
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return send.status(401).send({ message: "Unauthorized token" });
     }
-    //
+    req.user = decoded;
     next();
   });
 };
@@ -110,9 +109,13 @@ async function run() {
     // job application apis
     // get all data, get one data, get some data[0, 1 , many]
 
-    app.get("/job-application", verifyToken, async (req, res) => {
+    app.get("/job-application", async (req, res) => {
       const email = req.query.email;
       const query = { applicant_email: email };
+
+      if (req.user.email !== req.query.email) {
+        return res.status(403).send({ message: "Forbidden access" });
+      }
 
       const result = await jobApplication.find(query).toArray();
       // bot way to aggregate data
