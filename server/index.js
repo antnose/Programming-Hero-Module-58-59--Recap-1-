@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 // all middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173/"],
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
@@ -49,7 +49,8 @@ async function run() {
     // Auth Related APIS
     app.post(`/jwt`, async (req, res) => {
       const user = req.body;
-      const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" });
+      const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "5h" });
+
       res
         .cookie("token", token, {
           httpOnly: true,
@@ -91,9 +92,7 @@ async function run() {
     app.get("/job-application", async (req, res) => {
       const email = req.query.email;
       const query = { applicant_email: email };
-
-      console.log("Cookies", req.cookies);
-
+      console.log("Cuk cuk", req.cookies);
       const result = await jobApplication.find(query).toArray();
       // bot way to aggregate data
       for (const application of result) {
